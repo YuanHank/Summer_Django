@@ -68,8 +68,9 @@ def web_data_ajax(request):
         "numbers":numbers
     }
     return JsonResponse(response)
-def output(request):
-    return render(request,'crawler.html',locals())
+def output(request,pk):
+    id = pk
+    return render(request,'output.html',locals())
 '''===================================================================================================='''
 def index(request):
     genes = Hw1Improve.objects.all()
