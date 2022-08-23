@@ -3,7 +3,9 @@ from django.http import HttpResponse
 from datetime import datetime
 import pandas as pd
 from .models import Hw1Improve,User
+import json
 import re
+from .wormbase import wormbase_crawler
 from new_app import form
 from django.db import connection
 from django.http import JsonResponse
@@ -20,7 +22,7 @@ def crawler(request):
         'name' : name
     }
     return JsonResponse(response)
-    #return render(request,'crawler.html',locals())
+    #沒用到
 def web_data(request):
 
     return render(request,'web_data.html',locals())
@@ -68,8 +70,18 @@ def web_data_ajax(request):
         "numbers":numbers
     }
     return JsonResponse(response)
+
 def output(request,pk):
-    id = pk
+    try:
+        id = pk
+        sequence_fin,exon_intron,exon,protein = wormbase_crawler(transcript= id)
+        exon = exon.reset_index().to_json(orient ='records')
+        exon_intron = exon_intron.reset_index().to_json(orient='records')
+        data_exon = list(json.loads(exon))
+        data_exon_intron = list(json.loads(exon_intron))
+        #print(data)
+    except: 
+        pass
     return render(request,'output.html',locals())
 '''===================================================================================================='''
 def index(request):
