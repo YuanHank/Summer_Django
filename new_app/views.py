@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from datetime import datetime
 import pandas as pd
+import numpy as np
 from .models import Hw1Improve,User
 import json
 import re
@@ -72,6 +73,8 @@ def web_data_ajax(request):
     return JsonResponse(response)
 
 def output(request,pk):
+    protein_lis = []
+    
     try:
         id = pk
         sequence_fin,exon_intron,exon,protein = wormbase_crawler(transcript= id)
@@ -79,7 +82,33 @@ def output(request,pk):
         exon_intron = exon_intron.reset_index().to_json(orient='records')
         data_exon = list(json.loads(exon))
         data_exon_intron = list(json.loads(exon_intron))
-        #print(data)
+        if protein !='missing':
+            for i in range(10,len(protein),10):
+                if i ==10:
+                    protein_lis.append(protein[0:i])
+                else:
+                    protein_lis.append(protein[i-10:i])
+            if len(protein)%10 !=0:
+                protein_lis.append(protein[(len(protein)-len(protein)%10):len(protein)])
+        else:
+            pass
+        while len(protein_lis)%5 !=0:
+            protein_lis.append('nan')  
+        protein_arr = np.array(protein_lis)
+        protein_arr = protein_arr.reshape((int(len(protein_arr)/5),5))
+        protein_df = pd.DataFrame(columns=['1','2','3','4','5'],data = protein_arr)
+        protein_df = protein_df.reset_index()
+        protein_df = protein_df.replace('nan','')
+        print(protein_df) 
+        for i in range(len(protein_df)):
+            if i ==0:
+                protein_df['index'][i] = 1
+            else:
+                protein_df['index'][i] = i*50+1
+         
+        protein_df = protein_df.to_json(orient='records')
+        data_protein_df =list(json.loads(protein_df))
+
     except: 
         pass
     return render(request,'output.html',locals())
