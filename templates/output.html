@@ -52,7 +52,17 @@
                 </tbody>
             </table>
         </div>
+        <script>
+            $(document).ready( function () {
+                $('#exon_table').DataTable({
+                    "searching": false,
+                    "paging": false,
+                    "info": false,
+                }); 
+            } );
+        </script>
     </div>
+
 
     <div>
         <button class="btn btn-outline-primary" style = 'text-align:center;position:relative;left:45%;'>
@@ -82,6 +92,15 @@
                 </tbody>
             </table>
         </div>
+        <script>
+            $(document).ready( function () {
+                $('#exon_intron_table').DataTable({
+                    "searching": false,
+                    "paging": false,
+                    "info": false,
+                }); 
+            } );
+        </script>
     </div>
 
     <div>
@@ -91,11 +110,46 @@
             </div>
         </button>
         <div class="panel"  >
-            <p id = 'protein' style="display: none;">
-                {{protein}}
-            </p>
+            <table class="table table-hover" id = 'protein_table' style="display: none;">
+                <!--
+                <thead>
+                    <tr>
+                    <th>index</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    </tr>
+                </thead>
+                -->
+                <tbody>
+                    {% for i in data_protein_df %}
+                    <tr>
+                        <td>{{i.index}}</td>
+                        <td>{{i.1}}</td>
+                        <td>{{i.2}}</td>
+                        <td>{{i.3}}</td>
+                        <td>{{i.4}}</td>
+                        <td>{{i.5}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
+        <script>
+            $(document).ready( function () {
+                $('#protein_table').DataTable({
+                    "searching": false,
+                    "paging": false,
+                    "info": false,
+                    "ordering": false,
+                }); 
+            } );
+        </script>
+    
     </div>  
+
 </div>
 
 
