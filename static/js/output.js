@@ -10,7 +10,7 @@ $(document).ready(function(){
         $("#exon_intron_table").toggle("slow");
         });
     $("#protein_sequence").on('click', function(){
-        $("#protein").toggle("slow");
+        $("#protein_table").toggle("slow");
         });        
 
 });
