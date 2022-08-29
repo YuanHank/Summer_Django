@@ -22,7 +22,7 @@ $(document).ready(function(){
                 //$("#message").html('<div class="alert alert-warning">' + response.message + '</div>');
                 $("#gene_id").html(response.Gene_ID);
                 for (var i =0;i<len;i++){
-                    $("#transcript").append('<button class="btn btn-outline-primary" id="transcript_button"'+'value ='+transcript_list[i]+">"+transcript_list[i]+"</button>");
+                    $("#transcript").append("<a href ='web_data/output/"+transcript_list[i]+"'"+'>'+transcript_list[i]+"</a>");
                 } // by using loop , I can append transcipts seperatly and giving it a url,
                 //$("#transcript").html(transcript); //this line is old version which will only get the string of the transcript
                 $("#number").html(response.numbers);
@@ -33,27 +33,27 @@ $(document).ready(function(){
         });
 
     });
-    $('#transcript').on('click','#transcript_button',function(){
-        var fired_button = $(this).val();
-        //window.location.href = 'output/';
- 
-        $.ajax({
-            headers: { 'X-CSRFToken': csrf_token },
-            type: 'POST',
-            url: 'crawler/', 
-            data: {'transcript':fired_button},
-            success: function(response){
-                location.href = 'output/';
-                alert(response.name);
-                //
-                $("#output").html('<h2>'+response.name+'</h2>');
-            },
-            error: function(){
-                alert('Something error');
-            },
-            
-        });
-    });
+    
+    //$('#transcript').on('click','#transcript_button',function(){
+    //    var fired_button = $(this).val();
+    //    window.location.href = 'output/';
+        
+    //    $.ajax({
+    //        headers: { 'X-CSRFToken': csrf_token },
+    //        type: 'POST',
+    //        url: 'crawler/', 
+    //        data: {'transcript':fired_button},
+    //        success: function(response){
+                
+    //            alert(response.name);
+    //            $("#output").html('<h2>'+response.name+'</h2>');
+    //        },
+    //        error: function(){
+    //            alert('Something error');
+    //        },
+        
+    //    });
+    //});
 });
 
 //https://wormbase.org/species/c_elegans/transcript/"+transcript_list[i]+"#06--10
