@@ -1,3 +1,4 @@
+from msilib import sequence
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from datetime import datetime
@@ -17,10 +18,14 @@ def hello_world(request):
     return render(request,'hello_world.html',locals())# used locals()包成區域變數 傳入dicts
 
 def crawler(request):
+    input = request.POST['transcript']
+    print('request',input)
+    sequence_fin,exon_intron,exon,protein = wormbase_crawler(transcript= input)
+    print(sequence_fin)
 
-    name = request.POST['transcript']
-    response ={
-        'name' : name
+    response = {
+        'sequence_fin' : sequence_fin
+
     }
     return JsonResponse(response)
     #沒用到
@@ -99,7 +104,7 @@ def output(request,pk):
         protein_df = pd.DataFrame(columns=['1','2','3','4','5'],data = protein_arr)
         protein_df = protein_df.reset_index()
         protein_df = protein_df.replace('nan','')
-        print(protein_df) 
+        #print(protein_df) 
         for i in range(len(protein_df)):
             if i ==0:
                 protein_df['index'][i] = 1
@@ -112,6 +117,7 @@ def output(request,pk):
     except: 
         pass
     return render(request,'output.html',locals())
+
 '''===================================================================================================='''
 def index(request):
     genes = Hw1Improve.objects.all()
