@@ -25,6 +25,7 @@ urlpatterns = [
     path('web_data/',views.web_data),
     path('web_data/ajax/',views.web_data_ajax),
     path('gene_list/',views.gene_list),
-    path('web_data/crawler/',views.crawler),
-    re_path(r'web_data/output/(?P<pk>.+)',views.output)
+    path('web_data/output/crawler/',views.crawler),
+    re_path(r'web_data/output/(?P<pk>.+)',views.output),
+    
 ]
