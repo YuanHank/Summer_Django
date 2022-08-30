@@ -1,4 +1,4 @@
-from msilib import sequence
+#from msilib import sequence
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from datetime import datetime
@@ -19,13 +19,17 @@ def hello_world(request):
 
 def crawler(request):
     input = request.POST['transcript']
-    print('request',input)
     sequence_fin,exon_intron,exon,protein = wormbase_crawler(transcript= input)
-    print(sequence_fin)
-
+    #print(sequence_fin)
+    exon_intron_type = exon_intron['type'].to_json(orient='records')
+    exon_intron_start = exon_intron['start'].to_json(orient='records')
+    exon_intron_stop = exon_intron['stop'].to_json(orient='records')
+    print('sus')
     response = {
-        'sequence_fin' : sequence_fin
-
+        'sequence_fin' : sequence_fin,
+        'exon_intron_type':exon_intron_type,
+        'exon_intron_start':exon_intron_start,
+        'exon_intron_stop':exon_intron_stop
     }
     return JsonResponse(response)
     #沒用到
