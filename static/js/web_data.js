@@ -22,7 +22,7 @@ $(document).ready(function(){
                 //$("#message").html('<div class="alert alert-warning">' + response.message + '</div>');
                 $("#gene_id").html(response.Gene_ID);
                 for (var i =0;i<len;i++){
-                    $("#transcript").append("<a href ='web_data/output/"+transcript_list[i]+"'"+'>'+transcript_list[i]+"</a>");
+                    $("#transcript").append("<a href ='/web_data/output/"+transcript_list[i]+"'"+'>'+transcript_list[i]+"</a>");
                 } // by using loop , I can append transcipts seperatly and giving it a url,
                 //$("#transcript").html(transcript); //this line is old version which will only get the string of the transcript
                 $("#number").html(response.numbers);
