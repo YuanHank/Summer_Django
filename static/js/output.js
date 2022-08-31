@@ -46,7 +46,7 @@ $(document).ready(function(){
                 //sequence_fin = sequence_fin.split('');
                 //alert(sequence_fin)
                 //for (var i=0;i<sequence_fin.length;i++){
-
+                var color = 'orange';
                 for (var i=0;i<exon_intron_type.length;i++){
                     if (exon_intron_type[i] == 'five_prime_UTR')
                     {
@@ -55,17 +55,31 @@ $(document).ready(function(){
                         };
                     }
                     else if (exon_intron_type[i] == 'exon') {
+                        if (color == 'yellow'){
                         for (var j=exon_intron_start[i]-1;j<exon_intron_stop[i];j++){
                             if (sequence_fin[j] == sequence_fin[j].toUpperCase()){
-                                $('#Sequence').append("<span class = 'G2' style='background-color: orange;'>"+sequence_fin[j]+'</span>');
-                            }         
+                                    $('#Sequence').append("<span class = 'G2' style='background-color: orange;'>"+sequence_fin[j]+'</span>');    
+                                };
+
+                            };     
+                        color = 'orange';
+                        }else if (color =='orange'){
+                            for (var j=exon_intron_start[i]-1;j<exon_intron_stop[i];j++){
+                                if (sequence_fin[j] == sequence_fin[j].toUpperCase()){
+                                        $('#Sequence').append("<span class = 'G2' style='background-color: yellow;'>"+sequence_fin[j]+'</span>');    
+                                    };
+    
+                                }; 
+                                color = 'yellow';  
                         };
-                    } else if (exon_intron_type[i] == 'intron') {
+                    } 
+                    else if (exon_intron_type[i] == 'intron') {
                         for (var j=exon_intron_start[i]-1;j<exon_intron_stop[i];j++){
                             $('#Sequence').append("<span class = 'G3' >"+sequence_fin[j]+'</span>'); 
                         };
                      
-                    }else if (exon_intron_type[i] == 'three_prime_UTR') {
+                    }
+                    else if (exon_intron_type[i] == 'three_prime_UTR') {
                         for (var j=exon_intron_start[i]-1;j<exon_intron_stop[i];j++){
                             $('#Sequence').append("<span class = 'G2' style='background-color: grey;'>"+sequence_fin[j]+'</span>'); 
                         };
