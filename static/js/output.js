@@ -2,7 +2,7 @@ $(document).ready(function(){
  
     $("#sequence_name").on('click', function(){
         $("#Sequence").toggle("slow");
-        $(".title-number").toggle("slow");
+        $("#title-num").toggle("slow");
         });
     $("#exon").on('click', function(){
         $("#exon_table").toggle("slow");
@@ -11,13 +11,15 @@ $(document).ready(function(){
         $("#exon_intron_table").toggle("slow");
         });
     $("#protein_sequence").on('click', function(){
-        $("#protein_table").toggle("slow");
+        $("#Protein").toggle("slow");
+        $('#protein-title').toggle('slow');
         });        
 
 
 
     $('#sequence_name').on('click',function(){
         $('#Sequence').empty()
+        $('#title-num').empty()
         var fired_button = document.URL; //用這個可以得到現在的URL網址
         transcript = fired_button.replace('http://127.0.0.1:8000/web_data/output/','');
         $.ajax({
@@ -95,4 +97,34 @@ $(document).ready(function(){
             },
         });
     });
+
+    $('#protein_sequence').on('click',function(){
+        var fired_button = document.URL; //用這個可以得到現在的URL網址
+        transcript = fired_button.replace('http://127.0.0.1:8000/web_data/output/','');
+        $.ajax({
+            headers: { 'X-CSRFToken': csrf_token },
+            type: 'POST',
+            url: 'crawler/', 
+            data: {'transcript':transcript},
+            success: function(response){
+                protein_title = response.protein_title
+                protein = response.protein
+                protein = protein.split('')
+                //alert(protein_title)
+                $('#Protein').empty()
+                $('#protein-title').empty()
+                
+                for (var i=0;i<protein_title.length;i++){
+                    $('#protein-title').append(`<span class='g6' >${protein_title[i]}</span><br>`)
+                }
+                for (var i=0;i<protein.length;i++){
+                $('#Protein').append(`<span class="g7">${protein[i]}</span>`)
+                }
+            },//回傳response
+            error: function(){
+                alert('Something error');
+            },
+        });
+    });
+
 });
