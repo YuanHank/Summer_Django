@@ -1,3 +1,29 @@
-.G1{
-    background-color: yellow;
+#Sequence span:nth-child(10n) {
+    margin-right: 0.5em;
+    
+    }
+@media (max-width:959.95px) {
+#Sequence span:nth-child(20n+1):before {
+    content: "";
+    display: block;
+    }
+}
+@media (min-width:960px) {
+#Sequence span:nth-child(50n+1):before {
+    content: "";
+    display: block;
+    }
+}
+.Sequencd {
+    flex: 0 1 0;
+
+}
+.g1{
+    font-family: monospace;
+}
+.g2{
+    font-family: monospace;
+}
+.g3{
+    font-family: monospace;
 }
