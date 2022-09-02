@@ -51,14 +51,14 @@ $(document).ready(function(){
                     if (exon_intron_type[i] == 'five_prime_UTR')
                     {
                         for (var j=exon_intron_start[i]-1;j<exon_intron_stop[i];j++){
-                            $('#Sequence').append('<span class="g1" style="background-color: grey;">'+sequence_fin[j]+'</span>'); 
+                            $('#Sequence').append(`<span class="g1" style="background-color: grey;">${sequence_fin[j]}</span>`); 
                         };
                     }
                     else if (exon_intron_type[i] == 'exon') {
                         if (color == 'yellow'){
                         for (var j=exon_intron_start[i]-1;j<exon_intron_stop[i];j++){
                             if (sequence_fin[j] == sequence_fin[j].toUpperCase()){
-                                    $('#Sequence').append('<span class="g2" style="background-color: orange;">'+sequence_fin[j]+'</span>');    
+                                    $('#Sequence').append(`<span class="g2" style="background-color: orange;">${sequence_fin[j]}</span>`);    
                                 };
 
                             };     
@@ -66,7 +66,7 @@ $(document).ready(function(){
                         }else if (color =='orange'){
                             for (var j=exon_intron_start[i]-1;j<exon_intron_stop[i];j++){
                                 if (sequence_fin[j] == sequence_fin[j].toUpperCase()){
-                                        $('#Sequence').append('<span class="g2" style="background-color: yellow;">'+sequence_fin[j]+'</span>');    
+                                        $('#Sequence').append(`<span class="g2" style="background-color: yellow;">${sequence_fin[j]}</span>`);    
                                     };
     
                                 }; 
@@ -75,13 +75,13 @@ $(document).ready(function(){
                     } 
                     else if (exon_intron_type[i] == 'intron') {
                         for (var j=exon_intron_start[i]-1;j<exon_intron_stop[i];j++){
-                            $('#Sequence').append('<span class="g3" >'+sequence_fin[j]+'</span>'); 
+                            $('#Sequence').append(`<span class="g3" >${sequence_fin[j]}</span>`); 
                         };
                      
                     }
                     else if (exon_intron_type[i] == 'three_prime_UTR') {
                         for (var j=exon_intron_start[i]-1;j<exon_intron_stop[i];j++){
-                            $('#Sequence').append("<span class = 'g2' style='background-color: grey;'>"+sequence_fin[j]+'</span>'); 
+                            $('#Sequence').append(`<span class = 'g2' style='background-color: grey;'>${sequence_fin[j]}</span>`); 
                         };
                 }};   
             },//回傳response
