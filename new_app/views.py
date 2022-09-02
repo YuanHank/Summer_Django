@@ -24,8 +24,10 @@ def crawler(request):
     exon_intron_type = exon_intron['type'].to_json(orient='records')
     exon_intron_start = exon_intron['start'].to_json(orient='records')
     exon_intron_stop = exon_intron['stop'].to_json(orient='records')
-    print('sus')
+    title = list(range(1,len(sequence_fin),50))
+    print(title)
     response = {
+        'title' : title,
         'sequence_fin' : sequence_fin,
         'exon_intron_type':exon_intron_type,
         'exon_intron_start':exon_intron_start,
@@ -101,6 +103,7 @@ def output(request,pk):
                 protein_lis.append(protein[(len(protein)-len(protein)%10):len(protein)])
         else:
             pass
+
         while len(protein_lis)%5 !=0:
             protein_lis.append('nan')  
         protein_arr = np.array(protein_lis)
