@@ -1,6 +1,5 @@
 #Sequence span:nth-child(10n) {
     margin-right: 0.5em;
-    
     }
 @media (max-width:959.95px) {
 #Sequence span:nth-child(20n+1):before {
@@ -26,4 +25,17 @@
 }
 .g3{
     font-family: monospace;
+}
+.g5{
+    font-family: monospace;
+}
+.title-number{ 
+    width:120px;
+    text-align:right;
+    float:left;
+}
+.sequence{
+margin-left:120px;
+margin-right:120px;
+text-align:left;
 }
