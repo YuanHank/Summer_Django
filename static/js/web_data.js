@@ -22,8 +22,9 @@ $(document).ready(function(){
                 //$("#message").html('<div class="alert alert-warning">' + response.message + '</div>');
                 $("#gene_id").html(response.Gene_ID);
                 for (var i =0;i<len;i++){
-                    $("#transcript").append("<a href ='/web_data/output/"+transcript_list[i]+"'"+'>'+transcript_list[i]+"</a>");
+                    $("#transcript").append(`<a href ="/web_data/output/${transcript_list[i].replace(' ','')}">${transcript_list[i]}</a>|`);
                 } // by using loop , I can append transcipts seperatly and giving it a url,
+                // 用反單引號加上＄{}可傳入變數
                 //$("#transcript").html(transcript); //this line is old version which will only get the string of the transcript
                 $("#number").html(response.numbers);
             },//回傳response
@@ -33,27 +34,27 @@ $(document).ready(function(){
         });
 
     });
-    
-    //$('#transcript').on('click','#transcript_button',function(){
-    //    var fired_button = $(this).val();
-    //    window.location.href = 'output/';
+    /*
+    $('#transcript').on('click','#transcript_button',function(){
+        var fired_button = $(this).val();
+        window.location.href = 'output/';
         
-    //    $.ajax({
-    //        headers: { 'X-CSRFToken': csrf_token },
-    //        type: 'POST',
-    //        url: 'crawler/', 
-    //        data: {'transcript':fired_button},
-    //        success: function(response){
+        $.ajax({
+            headers: { 'X-CSRFToken': csrf_token },
+            type: 'POST',
+            url: 'crawler/', 
+            data: {'transcript':fired_button},
+            success: function(response){
                 
-    //            alert(response.name);
-    //            $("#output").html('<h2>'+response.name+'</h2>');
-    //        },
-    //        error: function(){
-    //            alert('Something error');
-    //        },
+                alert(response.name);
+                $("#output").html('<h2>'+response.name+'</h2>');
+            },
+            error: function(){
+                alert('Something error');
+            },
         
-    //    });
-    //});
+        });
+    });*/
 });
 
 //https://wormbase.org/species/c_elegans/transcript/"+transcript_list[i]+"#06--10
