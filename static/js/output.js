@@ -2,6 +2,7 @@ $(document).ready(function(){
  
     $("#sequence_name").on('click', function(){
         $("#Sequence").toggle("slow");
+        $(".title-number").toggle("slow");
         });
     $("#exon").on('click', function(){
         $("#exon_table").toggle("slow");
@@ -25,10 +26,11 @@ $(document).ready(function(){
             url: 'crawler/', 
             data: {'transcript':transcript},
             success: function(response){
+                title =response.title;
                 exon_intron_type = response.exon_intron_type;
-                exon_intron_start = response.exon_intron_start
-                exon_intron_stop = response.exon_intron_stop
-                sequence_fin = response.sequence_fin
+                exon_intron_start = response.exon_intron_start;
+                exon_intron_stop = response.exon_intron_stop;
+                sequence_fin = response.sequence_fin;
                 /*----------------------------------------------------------------------------- */
                 exon_intron_type = exon_intron_type.replace('[','');
                 exon_intron_type = exon_intron_type.replace(']','');
@@ -47,6 +49,9 @@ $(document).ready(function(){
                 //alert(sequence_fin)
                 //for (var i=0;i<sequence_fin.length;i++){
                 var color = 'orange';
+                for (var i=0;i<title.length;i++){
+                    $("#title-num").append(`<span class='g5'>${title[i]}</span><br>`)
+                }
                 for (var i=0;i<exon_intron_type.length;i++){
                     if (exon_intron_type[i] == 'five_prime_UTR')
                     {
