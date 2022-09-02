@@ -25,13 +25,16 @@ def crawler(request):
     exon_intron_start = exon_intron['start'].to_json(orient='records')
     exon_intron_stop = exon_intron['stop'].to_json(orient='records')
     title = list(range(1,len(sequence_fin),50))
-    print(title)
+    protein_title = list(range(1,len(protein),50))
+    print(protein_title)
     response = {
         'title' : title,
         'sequence_fin' : sequence_fin,
         'exon_intron_type':exon_intron_type,
         'exon_intron_start':exon_intron_start,
-        'exon_intron_stop':exon_intron_stop
+        'exon_intron_stop':exon_intron_stop,
+        'protein_title':protein_title,
+        'protein':protein
     }
     return JsonResponse(response)
     #沒用到
