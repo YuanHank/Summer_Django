@@ -13,10 +13,25 @@
     display: block;
     }
 }
-.Sequencd {
+.sequence {
     flex: 0 1 0;
 
 }
+.title-number{ 
+    width:110px;
+    text-align:right;
+    float:left;
+}
+.sequence{
+margin-left:120px;
+margin-right:120px;
+text-align:left;
+}
+
+
+
+
+
 .g1{
     font-family: monospace;
 }
@@ -29,12 +44,37 @@
 .g5{
     font-family: monospace;
 }
-.title-number{ 
-    width:120px;
+.g6{
+    font-family: monospace;
+}
+.g7{
+    font-family: monospace;
+}
+
+
+#Protein span:nth-child(10n) {
+    margin-right: 0.5em;
+    }
+@media (max-width:959.95px) {
+#Protein span:nth-child(20n+1):before {
+    content: "";
+    display: block;
+    }
+}
+@media (min-width:960px) {
+#Protein span:nth-child(50n+1):before {
+    content: "";
+    display: block;
+    }
+}
+
+.protein-title{ 
+    width:110px;
     text-align:right;
     float:left;
+
 }
-.sequence{
+.protein{
 margin-left:120px;
 margin-right:120px;
 text-align:left;
