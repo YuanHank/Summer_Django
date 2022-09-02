@@ -6,17 +6,21 @@
 {% csrf_token %}
 <script> csrf_token= "{{ csrf_token }}"</script>
 <div class="card mt-3">
-    <div class="card-header fs-5 fw-bold">
+    <div class="card-header fs-5 fw-bold" id="script_ID">
         {{id}}
     </div>
    
     <div>
         <button class="btn btn-outline-primary" style = 'text-align:center;position:relative;left:45%;'>
             <div class="flip" id = 'sequence_name'  >
-                <span class="1">Sequence</span>
+                <span class="1">Unspliced+UTR</span>
             </div>
         </button>
         <div class="panel" >
+            <div class="title-number" style="display: none;">
+                <p id="title-num">
+                </p>
+            </div>
             <div class="sequence">
             <p id = 'Sequence' style="display: none;">
                 <!--{{sequence_fin}}-->
