@@ -17,14 +17,14 @@
             </div>
         </button>
         <div class="panel" >
-            <div class="title-number" style="display: none;">
-                <p id="title-num">
+            <div class="title-number" >
+                <p id="title-num" style="display: none;">
                 </p>
             </div>
             <div class="sequence">
-            <p id = 'Sequence' style="display: none;">
+                <p id = 'Sequence' style="display: none;">
                 <!--{{sequence_fin}}-->
-            </p>
+                </p>
             </div>
         </div>
     </div>
@@ -115,44 +115,21 @@
                 <span class="1">protein_sequence</span>
             </div>
         </button>
-        <div class="panel"  >
-            <table class="table table-hover" id = 'protein_table' style="display: none;">
-                <!--
-                <thead>
-                    <tr>
-                    <th>index</th>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
-                    <th>5</th>
-                    </tr>
-                </thead>
-                -->
-                <tbody>
-                    {% for i in data_protein_df %}
-                    <tr>
-                        <td>{{i.index}}</td>
-                        <td>{{i.1}}</td>
-                        <td>{{i.2}}</td>
-                        <td>{{i.3}}</td>
-                        <td>{{i.4}}</td>
-                        <td>{{i.5}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+
+        <div class="panel" >
+            <div class="protein-title" >
+                <p id ='protein-title' style="display: none">
+                    
+                </p>
+            </div>
+            <div class="protein">
+                <p id="Protein" style="display: none" >
+
+                </p>
+            </div>
         </div>
-        <script>
-            $(document).ready( function () {
-                $('#protein_table').DataTable({
-                    "searching": false,
-                    "paging": false,
-                    "info": false,
-                    "ordering": false,
-                }); 
-            } );
-        </script>
+ 
+
     
     </div>  
 
