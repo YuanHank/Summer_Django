@@ -18,13 +18,13 @@
 
 }
 .title-number{ 
-    width:50px;
+    width:400px;
     text-align:right;
     float:left;
 }
 .sequence{
-margin-left:60px;
-margin-right:700px;
+margin-left:410px;
+margin-right:400px;
 text-align:left;
 
 }
@@ -35,7 +35,6 @@ text-align:left;
     background-color: lightgrey;
 
 }
-
 
 
 
