@@ -1,0 +1,189 @@
+#Sequence span:nth-child(10n) {
+    margin-right: 0.5em;
+    }
+@media (max-width:959.95px) {
+#Sequence span:nth-child(20n+1):before {
+    content: "";
+    display: block;
+    }
+}
+@media (min-width:960px) {
+#Sequence span:nth-child(50n+1):before {
+    content: "";
+    display: block;
+    }
+}
+.sequence {
+    flex: 0 1 0;
+
+}
+.title-number{ 
+    width:400px;
+    text-align:right;
+    float:left;
+}
+.sequence{
+margin-left:410px;
+margin-right:100px;
+text-align:left;
+
+}
+.rect-unspliced{
+    margin-left:20px;
+    margin-right:0px;
+    text-align:left;
+}
+
+
+#Sequence_spliced span:nth-child(10n) {
+    margin-right: 0.5em;
+    }
+@media (max-width:959.95px) {
+#Sequence_spliced span:nth-child(20n+1):before {
+    content: "";
+    display: block;
+    }
+}
+@media (min-width:960px) {
+#Sequence_spliced span:nth-child(50n+1):before {
+    content: "";
+    display: block;
+    }
+}
+.sequence_spliced {
+    flex: 0 1 0;
+
+}
+.title-number_spliced{ 
+    width:400px;
+    text-align:right;
+    float:left;
+}
+.sequence_spliced{
+margin-left:410px;
+margin-right:100px;
+text-align:left;
+}
+.rect-spliced{
+    margin-left:20px;
+    margin-right:0px;
+    text-align:left;
+}
+
+
+
+.g1{
+    font-family: monospace;
+}
+.g2{
+    font-family: monospace;
+}
+.g3{
+    font-family: monospace;
+}
+.g5{
+    font-family: monospace;
+}
+.g6{
+    font-family: monospace;
+}
+.g7{
+    font-family: monospace;
+}
+
+
+#Protein span:nth-child(10n) {
+    margin-right: 0.5em;
+    }
+@media (max-width:959.95px) {
+#Protein span:nth-child(20n+1):before {
+    content: "";
+    display: block;
+    }
+}
+@media (min-width:960px) {
+#Protein span:nth-child(50n+1):before {
+    content: "";
+    display: block;
+    }
+}
+
+.protein-title{ 
+    width:350px;
+    text-align:right;
+    float:left;
+
+}
+.protein{
+margin-left:360px;
+margin-right:300px;
+text-align:left;
+}
+
+
+.legend { list-style: none; }
+.legend li { float: left; margin-right: 10px; }
+.legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+/* your colors */
+.legend .UTR { background-color: gray; }
+.legend .exon1 { background-color: Khaki; }
+.legend .exon2 { background-color: orange; }
+.legend .intron { background-color: white; }
+
+.legend_unspliced{
+    margin-right:100px;
+}
+
+.hightlight{
+    background-color: yellow !important;
+}
+
+#b{
+    background-color:skyblue;
+    font-family: monospace;
+}
+
+#g{
+    background-color: rgb(109, 221, 109);
+    font-family: monospace;
+}
+
+#L{
+    font-size: 15pt;
+    color: red;
+    font-family: monospace;
+}
+
+span .y{
+    background-color: yellow; /*Add your desired color*/
+    font-family: monospace;
+  }
+
+mark{
+    background-color: yellow; /*Add your desired color*/
+}
+.pairing-sequence{
+    text-align: left;
+    font-family: monospace;
+}
+span{
+    font-family: monospace;
+}
+/*
+  .parent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+   .child{
+      width: auto;
+   }
+.pairing-sequence{
+    text-align: center;
+    font-family: Lucida Console;
+    font-size: 15pt;
+}
+*, ::after, ::before {
+    box-sizing: inherit;
+}*/
