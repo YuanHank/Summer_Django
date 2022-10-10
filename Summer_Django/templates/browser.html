@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Form Test {% endblock %}
+{% block content %}
+<div class="container">
+{% csrf_token %}
+<script>csrf_token= "{{ csrf_token }}"</script>
+<div class="card mt-3">
+    <div class="card-header fs-5 fw-bold">
+        browser
+    </div>
+
+    <div class='card-body' id="browser">
+        <form id="ajax_form" method="post">
+            <input type="checkbox" id="type" name="type" value="Coding transcript">
+            <label for="type"> coding transcript</label>
+            <input type="checkbox" id="type" name="type" value="non coding transcript">
+            <label for="type"> non coding transcript</label>
+            <input type="checkbox" id="type" name="type" value="scRNA">
+            <label for="type"> scRNA</label>
+            <input type="checkbox" id="type" name="type" value="snRNA">
+            <label for="type"> snRNA</label><br>
+            <input type="checkbox" id="type" name="type" value="snoRNA">
+            <label for="type"> snoRNA</label>
+            <input type="checkbox" id="type" name="type" value="tRNA">
+            <label for="type"> tRNA</label>
+            <input type="checkbox" id="type" name="type" value="rRNA">
+            <label for="type"> rRNA</label>
+            <input type="checkbox" id="type" name="type" value="ncRNA">
+            <label for="type"> ncRNA</label><br>
+            <input type="checkbox" id="type" name="type" value="7kncRNA">
+            <label for="type"> 7kncRNA</label>
+            <input type="checkbox" id="type" name="type" value="asRNA">
+            <label for="type"> asRNA</label>
+            <input type="checkbox" id="type" name="type" value="circRNA">
+            <label for="type"> circRNA</label>
+            <input type="checkbox" id="type" name="type" value="lincRNA">
+            <label for="type"> lincRNA</label><br>
+            <input type="checkbox" id="type" name="type" value="piRNA">
+            <label for="type"> piRNA</label>
+            <input type="checkbox" id="type" name="type" value="miRNA">
+            <label for="type"> miRNA</label>
+            <input type="checkbox" id="type" name="type" value="miRNA primary transcript">
+            <label for="type"> miRNA_primary</label>
+            <input type="checkbox" id="type" name="type" value="pre miRNA">
+            <label for="type"> pre miRNA</label><br>
+            <input type="checkbox" id="type" name="type" value="Transposon ncRNA">
+            <label for="type"> Transposon ncRNA</label>
+            <input type="checkbox" id="type" name="type" value="Transposon-mRNA">
+            <label for="type"> Transposon mRNA</label>
+            <input type="checkbox" id="type" name="type" value="Transposon Pseudogene">
+            <label for="type"> Transposon Pseudogene</label>
+            <input type="checkbox" id="type" name="type" value="Pseudogene">
+            <label for="type"> Pseudogene</label><br>
+            <input type="checkbox" id="type" name="type" value="rRNA pseudogene">
+            <label for="type"> rRNA pseudogene</label>
+            <input type="checkbox" id="type" name="type" value="tRNA pseudogene">
+            <label for="type"> tRNA pseudogene</label><br><br>
+
+        </form>
+        <button  id="submit">submit</button>        
+    </div>
+
+    <div>   
+        <table class="table table-hover" id =browser-table style=" border-collapse: collapse;border: 1px solid;">
+            <thead >
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    
+</div>
+<script src="{% static 'js/browser.js' %}"></script> 
+{% endblock %}
