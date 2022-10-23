@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Form Test {% endblock %}
+{% block content %}
+<div class="container">
+{% csrf_token %}
+<script>csrf_token= "{{ csrf_token }}"</script>
+<div class="card mt-3">
+    <div class="card-header fs-5 fw-bold">
+        pirscan {{id}}
+    </div>
+
+    <div class='card-body' id = 'd3' style="background-color:beige">
+        
+        <div id = 'pirscan'></div>
+        <div id ='sequence'></div>  
+        <div id ='ticker'></div>      
+        <div id="G_22"></div>
+    </div>
+
+    <div style="position: relative; overflow: auto; width: 100%;" id = 'table'>   
+        <table class="table table-hover" id =sequence-table role="grid" aria-describedby="originalResult-myTable_info" style="width: 1489px;">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+
+        </table>
+    </div>
+
+</div>
+<script src="{% static 'js/pirscan_auto.js' %}"></script> 
+{% endblock %}

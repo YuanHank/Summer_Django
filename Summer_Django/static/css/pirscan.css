@@ -1,0 +1,38 @@
+/* ===========================pirscan=======================================*/
+#b{
+    background-color:skyblue;
+    font-family: monospace;
+}
+
+#g{
+    background-color: rgb(109, 221, 109);
+    font-family: monospace;
+}
+
+#L{
+    font-size: 15pt;
+    color: red;
+    font-family: monospace;
+}
+
+span .y{
+    background-color: yellow; /*Add your desired color*/
+    font-family: monospace;
+  }
+
+mark{
+    background-color: yellow; /*Add your desired color*/
+}
+.pairing-sequence{
+    text-align: left;
+    font-family: monospace;
+}
+span{
+    font-family: monospace;
+}
+
+
+#tooltips2 table, #tooltips2 th, #tooltips2 td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
