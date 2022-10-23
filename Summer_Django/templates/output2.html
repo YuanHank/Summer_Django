@@ -5,7 +5,7 @@
 <div class="container">
 {% csrf_token %}
 <script> csrf_token= "{{ csrf_token }}"</script>
-<div class="card mt-3">
+<div class="card mt-3" style="background-color:GhostWhite;">
     <div class="card-header fs-5 fw-bold" id="script_ID">
         {{id}}
     </div>
@@ -120,7 +120,7 @@
     </div>
 
     <div>
-        <button class="btn btn-outline-primary" style = 'text-align:center;position:relative;left:45%;'>
+        <button class="btn btn-outline-primary" style = 'text-align:center;position:relative;left:45%;display:none'>
             <div class="flip" id = 'protein_sequence'>
                 <span class="1">protein_sequence</span>
             </div>

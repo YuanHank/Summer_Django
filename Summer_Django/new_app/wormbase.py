@@ -60,7 +60,7 @@ def wormbase_searching(gene_id):
     with request.urlopen(req) as response:
         sequence = response.read().decode("utf-8")
     sequence  = json.loads(sequence)
-    print(sequence)
+    #print(sequence)
     table = sequence['fields']['gene_models']['data']['table']
     table_list =[]
     for gene in table:
@@ -75,7 +75,7 @@ def wormbase_searching(gene_id):
 #print(table_list) 
     return (table_list)
 if __name__ =='__main__':
-    transcript = 'F07C3.7.1' ##non coding RNA
+    transcript = 'F52H2.2a.1' ##non coding RNA
     #transcript = 'C04A11.4a.1' #mRNA
     #gene_id='WBGene00306126'
     #gene_id = 'WBGene00019562'

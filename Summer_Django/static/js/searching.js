@@ -16,7 +16,6 @@ $(document).ready(function(){
                     "columns": [
                     { data: 'id', "name": "id",title:'transcript',
                         "render": function(data, type, row, meta){    
-                            
                             data = '<a href ="/web_data/output/' + data + '">' + data + '</a>';
                             return data;
                         }

@@ -118,8 +118,24 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
+class FinalResultWt1HrdeipWs285AllWithIdtype(models.Model):
+    input_id = models.TextField(blank=True, null=False, primary_key=True)
+    ref_id = models.TextField(blank=True, null=True)
+    wormbase_id = models.TextField(db_column='WormBase_ID', blank=True, null=True)  # Field name made lowercase.
+    type = models.TextField(blank=True, null=True)
+    init_pos = models.IntegerField(blank=True, null=True)
+    end_pos = models.IntegerField(blank=True, null=True)
+    read_count = models.IntegerField(blank=True, null=True)
+    field_ofanswers = models.IntegerField(db_column='#ofanswers', blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it started with '_'.
+    evenly_rc = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'final_result_WT1_HRDEIP_WS285_all_with_id'
+
+
 class Hw1Improve(models.Model):
-    gene_id = models.TextField(db_column='Gene_ID', blank=True, primary_key=True)  # Field name made lowercase.
+    gene_id = models.TextField(db_column='Gene_ID', primary_key=True, blank=True)  # Field name made lowercase.
     transcript_id = models.TextField(db_column='transcript_ID', blank=True, null=True)  # Field name made lowercase.
     numbers = models.IntegerField(blank=True, null=True)
 
@@ -128,20 +144,49 @@ class Hw1Improve(models.Model):
         db_table = 'hw1_improve'
 
 
-class NewAppGene(models.Model):
-    gene_id = models.CharField(max_length=100)
-    transcript_id = models.CharField(max_length=100)
-    numbers = models.IntegerField()
+class TranscriptWbidType(models.Model):
+    field1 = models.IntegerField(blank=True, null=True)
+    transcript = models.TextField(blank=True,  primary_key =True)
+    wormbase_id = models.TextField(db_column='Wormbase_id', blank=True,null = True)  # Field name made lowercase.
+    type = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'new_app_gene'
+        db_table = 'transcript_wbid_type'
+
 
 class User(models.Model):
-    user_id = models.CharField(max_length=100, primary_key=True)
-    user_pass = models.CharField(max_length=100)
-    user_content = models.TextField()
-    
+    user_id = models.CharField(primary_key=True, blank=True,max_length = 100)
+    user_pass = models.CharField(blank=True, null=True,max_length =100)
+    user_content = models.TextField(blank=True, null=True)
+
     class Meta:
         managed = False
         db_table = 'user'
+
+
+class Wormbase285(models.Model):
+    geneid = models.TextField(db_column='GeneID', primary_key=True)  # Field name made lowercase.
+    status = models.TextField(blank=True, null=True)
+    sequence = models.TextField(blank=True, null=True)
+    genename = models.TextField(db_column='GeneName', blank=True, null=True)  # Field name made lowercase.
+    othername = models.TextField(db_column='OtherName', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'wormbase285'
+
+
+class WormbaseGenetranscriptW285(models.Model):
+    geneid = models.TextField(primary_key=True)
+    status = models.TextField(blank=True, null=True)
+    sequence = models.TextField(blank=True, null=True)
+    genename = models.TextField(blank=True, null=True)
+    othername = models.TextField(blank=True, null=True)
+    transcript = models.TextField(blank=True, null=True)
+    type = models.TextField(blank=True, null=True)
+    transcript_count = models.TextField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'wormbase_genetranscript W285'

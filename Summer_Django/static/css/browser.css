@@ -1,0 +1,21 @@
+/*==================browser==========================*/
+#browser{
+    margin-left: 200px;
+}
+#browser input {
+    width: 20px;
+
+    position: relative;
+
+    vertical-align: middle;
+}
+
+#browser label {  
+    width: 200px;
+
+    position: relative;
+    background-color: whitesmoke;
+    display: inline-block;
+    vertical-align: middle;
+}
+.site {border-radius: 12px;background-color: rgb(236, 158, 130);}

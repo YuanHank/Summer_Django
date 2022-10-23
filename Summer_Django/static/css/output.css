@@ -1,3 +1,5 @@
+/* ===========================origin output page=======================================*/
+
 #Sequence span:nth-child(10n) {
     margin-right: 0.5em;
     }
@@ -71,7 +73,6 @@ text-align:left;
 }
 
 
-
 .g1{
     font-family: monospace;
 }
@@ -119,3 +120,18 @@ margin-left:360px;
 margin-right:300px;
 text-align:left;
 }
+
+
+.legend { list-style: none; }
+.legend li { float: left; margin-right: 10px; }
+.legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+/* your colors */
+.legend .UTR { background-color: gray; }
+.legend .exon1 { background-color: Khaki; }
+.legend .exon2 { background-color: orange; }
+.legend .intron { background-color: white; }
+
+.legend_unspliced{
+    margin-right:100px;
+}
+

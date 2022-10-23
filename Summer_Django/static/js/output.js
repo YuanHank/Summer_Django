@@ -12,7 +12,6 @@ $(document).ready(function(){
         $("#rect-spliced").toggle("slow");
         $("#exon_table").toggle("slow");
         });
-
     $("#protein_sequence").on('click', function(){
         $("#Protein").toggle("slow");
         $('#protein-title').toggle('slow');
@@ -20,8 +19,10 @@ $(document).ready(function(){
 
 
     var start_end_type=[]
+    var start_end_type_UTR=[]
     var tooltips 
     var start_end_type_spliced=[]
+    var start_end_type_spliced_UTR=[]
     var tooltips2
     
     $('#sequence_name').on('click',function(){
@@ -56,12 +57,12 @@ $(document).ready(function(){
                 exon_intron_stop = exon_intron_stop.replace(']','');
                 exon_intron_stop = exon_intron_stop.split(',');
                 /*----------------------------------------------------------------------------- */
-                //sequence_fin = sequence_fin.split('');
+
                 //alert(sequence_fin)
-                //for (var i=0;i<sequence_fin.length;i++){
+
                 var color = 'orange';
                 var rect_color='orange';
-                var rect =''
+                //var rect =''
                 // set numbers
                 for (var i=0;i<title.length;i++){
                     $("#title-num").append(`<span class='g5'>${title[i]}</span><br>`)
@@ -71,11 +72,11 @@ $(document).ready(function(){
                     if (exon_intron_type[i] == 'five_prime_UTR')
                     {
                         for (var j=exon_intron_start[i]-1;j<exon_intron_stop[i];j++){
-                            $('#Sequence').append(`<span class="g1" style="background-color: grey;">${sequence_fin[j]}</span>`); 
+                            $('#Sequence').append(`<span class="g1" style="background-color: gray;">${sequence_fin[j]}</span>`); 
                         };
                     }
                     else if (exon_intron_type[i] == 'exon') {
-                        if (color == 'yellow'){
+                        if (color == 'Khaki'){
                         for (var j=exon_intron_start[i]-1;j<exon_intron_stop[i];j++){
                             if (sequence_fin[j] == sequence_fin[j].toUpperCase()){
                                     $('#Sequence').append(`<span class="g2" style="background-color: orange;">${sequence_fin[j]}</span>`);    
@@ -86,11 +87,11 @@ $(document).ready(function(){
                         }else if (color =='orange'){
                             for (var j=exon_intron_start[i]-1;j<exon_intron_stop[i];j++){
                                 if (sequence_fin[j] == sequence_fin[j].toUpperCase()){
-                                        $('#Sequence').append(`<span class="g2" style="background-color: yellow;">${sequence_fin[j]}</span>`);    
+                                        $('#Sequence').append(`<span class="g2" style="background-color: Khaki;">${sequence_fin[j]}</span>`);    
                                     };
     
                                 }; 
-                                color = 'yellow';  
+                                color = 'Khaki';  
                         };
                     } 
                     else if (exon_intron_type[i] == 'intron') {
@@ -101,7 +102,7 @@ $(document).ready(function(){
                     }
                     else if (exon_intron_type[i] == 'three_prime_UTR') {
                         for (var j=exon_intron_start[i]-1;j<exon_intron_stop[i];j++){
-                            $('#Sequence').append(`<span class = 'g2' style='background-color: grey;'>${sequence_fin[j]}</span>`); 
+                            $('#Sequence').append(`<span class = 'g2' style='background-color: gray;'>${sequence_fin[j]}</span>`); 
                         };
                     }
                 };   
@@ -109,62 +110,33 @@ $(document).ready(function(){
                 for (var i=0;i<exon_intron_type.length;i++){
                     if (exon_intron_type[i] == 'five_prime_UTR')
                     {
-                        start_end_type.push({start:Number(exon_intron_start[i]),end:Number(exon_intron_stop[i]),type:String(exon_intron_type[i]),color:'gray',x:Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1],width:(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1],height:1,y:10.5})
+                        start_end_type_UTR.push({start:Number(exon_intron_start[i]),end:Number(exon_intron_stop[i]),type:String(exon_intron_type[i]),color:'gray',x:Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1],width:(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1],height:1.25,y:10.35})
                         //rect =rect+ `<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:gray;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`;
                         
                     }
                     else if (exon_intron_type[i] == 'exon') {
-                        if (i==1){
-                            if (rect_color == 'yellow'){
-                                start_end_type.push({start:Number(exon_intron_start[i]),end:Number(exon_intron_stop[i]),type:String(exon_intron_type[i]),color:'orange',x:(Number(exon_intron_stop[0])+1)*100/exon_intron_stop[exon_intron_type.length-1],width:(Number(exon_intron_stop[i])-Number(exon_intron_stop[i-1])+1)*100/exon_intron_stop[exon_intron_type.length-1],height:2,y:10})
-                                //rect += `<rect x="${(Number(exon_intron_stop[0])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_stop[i-1])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:orange;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`;
-                                rect_color = 'orange'    
-                            }
-                            else if (rect_color=='orange'){
-                                start_end_type.push({start:Number(exon_intron_start[i]),end:Number(exon_intron_stop[i]),type:String(exon_intron_type[i]),color:'yellow',x:(Number(exon_intron_stop[0])+1)*100/exon_intron_stop[exon_intron_type.length-1],width:(Number(exon_intron_stop[i])-Number(exon_intron_stop[i-1])+1)*100/exon_intron_stop[exon_intron_type.length-1],height:2,y:10})
-                                //rect +=`<rect x="${(Number(exon_intron_stop[0])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_stop[i-1])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:yellow;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
-                                
-                                
-                                rect_color = 'yellow'
-                            }
-                        }
-                        else if (i ==exon_intron_type.length-2){
-                            if (rect_color == 'yellow'){
-                                start_end_type.push({start:Number(exon_intron_start[i]),end:Number(exon_intron_stop[i]),type:String(exon_intron_type[i]),color:'orange',x:(Number(exon_intron_start[i]))*100/exon_intron_stop[exon_intron_type.length-1],width:(Number(exon_intron_start[i+1])-Number(exon_intron_start[i]))*100/exon_intron_stop[exon_intron_type.length-1],height:2,y:10})
-                                //rect += `<rect x="${(Number(exon_intron_start[i]))*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_start[i+1])-Number(exon_intron_start[i]))*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:orange;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron" />`;
-                                rect_color = 'orange'    
-                                
-                            }
-                            else if (rect_color=='orange'){
-                                start_end_type.push({start:Number(exon_intron_start[i]),end:Number(exon_intron_stop[i]),type:String(exon_intron_type[i]),color:'yellow',x:((Number(exon_intron_start[i]))*100/exon_intron_stop[exon_intron_type.length-1]),width:(Number(exon_intron_start[i+1])-Number(exon_intron_start[i]))*100/exon_intron_stop[exon_intron_type.length-1],height:2,y:10})
-                                //rect +=`<rect x="${((Number(exon_intron_start[i]))*100/exon_intron_stop[exon_intron_type.length-1])}" y="10" width="${(Number(exon_intron_start[i+1])-Number(exon_intron_start[i]))*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:yellow;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
-                                rect_color = 'yellow'
-                            }
-                        }
-                        else if(i!=1 & i!=exon_intron_type.length-2){
-                            if (rect_color == 'yellow'){
+                            if (rect_color == 'Khaki'){
                                 start_end_type.push({start:Number(exon_intron_start[i]),end:Number(exon_intron_stop[i]),type:String(exon_intron_type[i]),color:'orange',x:Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1],width:(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1],height:2,y:10})
                                // rect+=`<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:orange;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
                                 rect_color = 'orange';
                             }else if (rect_color=='orange'){
-                                start_end_type.push({start:Number(exon_intron_start[i]),end:Number(exon_intron_stop[i]),type:String(exon_intron_type[i]),color:'yellow',x:Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1],width:(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1],height:2,y:10})
+                                start_end_type.push({start:Number(exon_intron_start[i]),end:Number(exon_intron_stop[i]),type:String(exon_intron_type[i]),color:'Khaki',x:Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1],width:(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1],height:2,y:10})
                                // rect+=`<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:yellow;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
-                                rect_color= 'yellow';  
+                                rect_color= 'Khaki';  
                              }
-                        };
                     } 
                     else if (exon_intron_type[i] == 'intron') {
-                        start_end_type.push({start:Number(exon_intron_start[i]),end:Number(exon_intron_stop[i]),type:String(exon_intron_type[i]),color:'black',x:Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1],width:(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1],height:0.5,y:10.75})
+                        start_end_type.push({start:Number(exon_intron_start[i]),end:Number(exon_intron_stop[i]),type:String(exon_intron_type[i]),color:'green',x:Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1],width:(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1],height:0.5,y:10.75})
                        // rect+=`<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:white;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
                      
                     }
                     else if (exon_intron_type[i] == 'three_prime_UTR') {
-                        start_end_type.push({start:Number(exon_intron_start[i]),end:Number(exon_intron_stop[i]),type:String(exon_intron_type[i]),color:'gray',x:Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1],width:(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1],height:1,y:10.5})
+                        start_end_type_UTR.push({start:Number(exon_intron_start[i]),end:Number(exon_intron_stop[i]),type:String(exon_intron_type[i]),color:'gray',x:Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1],width:(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1],height:1.25,y:10.35})
                         //rect += `<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:gray;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
                     }
                 };   
                 //$('#rect-unspliced').append(`<svg viewbox="0,9.5,110,3" preserveAspectRatio="xMinYMin meet"> ${rect}</svg>`) //the old way to append rect by loop
-
+                start_end_type = start_end_type.concat(start_end_type_UTR)
                 // by using d3 append rect and set hover by toolips
                 d3.select('#rect-unspliced').style('position', 'relative')
                 rects = d3.select('#rect-unspliced')
@@ -266,26 +238,25 @@ $(document).ready(function(){
                     if (exon_type[i] == 'five_prime_UTR')
                     {
                         for (var j=exon_start[i]-1;j<exon_stop[i];j++){
-                            $('#Sequence_spliced').append(`<span class="g1" style="background-color: grey;">${sequence_fin[j]}</span>`); 
+                            $('#Sequence_spliced').append(`<span class="g1" style="background-color: gray;">${sequence_fin[j]}</span>`); 
                         };
                     }
                     else if (exon_type[i] == 'exon') {
-                        if (color == 'yellow'){
+                        if (color == 'Khaki'){
                         for (var j=exon_start[i]-1;j<exon_stop[i];j++){
                             if (sequence_fin[j] == sequence_fin[j].toUpperCase()){
                                     $('#Sequence_spliced').append(`<span class="g2" style="background-color: orange;">${sequence_fin[j]}</span>`);    
                                 };
-
                             };     
                         color = 'orange';
                         }else if (color =='orange'){
                             for (var j=exon_start[i]-1;j<exon_stop[i];j++){
                                 if (sequence_fin[j] == sequence_fin[j].toUpperCase()){
-                                        $('#Sequence_spliced').append(`<span class="g2" style="background-color: yellow;">${sequence_fin[j]}</span>`);    
+                                        $('#Sequence_spliced').append(`<span class="g2" style="background-color: Khaki;">${sequence_fin[j]}</span>`);    
                                     };
     
                                 }; 
-                                color = 'yellow';  
+                                color = 'Khaki';  
                         };
                     } 
                     else if (exon_type[i] == 'intron') {
@@ -296,7 +267,7 @@ $(document).ready(function(){
                     }
                     else if (exon_type[i] == 'three_prime_UTR') {
                         for (var j=exon_start[i]-1;j<exon_stop[i];j++){
-                            $('#Sequence_spliced').append(`<span class = 'g2' style='background-color: grey;'>${sequence_fin[j]}</span>`); 
+                            $('#Sequence_spliced').append(`<span class = 'g2' style='background-color: gray;'>${sequence_fin[j]}</span>`); 
                         };
                     }
                 };   
@@ -304,69 +275,40 @@ $(document).ready(function(){
                 for (var i=0;i<exon_type.length;i++){
                     if (exon_type[i] == 'five_prime_UTR')
                     {
-                        start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'gray',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:1,y:10.5})
+                        start_end_type_spliced_UTR.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'gray',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:1.25,y:10.35})
                         //rect =rect+ `<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:gray;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`;
                         
                     }
                     else if (exon_type[i] == 'exon') {
-                        if (i==1){
-                            if (rect_color == 'yellow'){
-                                start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'orange',x:(Number(exon_stop[0])+1)*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_stop[i-1])+1)*100/exon_stop[exon_type.length-1],height:2,y:10})
-                                //rect += `<rect x="${(Number(exon_intron_stop[0])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_stop[i-1])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:orange;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`;
-                                rect_color = 'orange'    
+                        if (rect_color == 'Khaki'){
+                            start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'orange',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:2,y:10})
+                            // rect+=`<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:orange;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
+                            rect_color = 'orange';
+                        }else if (rect_color=='orange'){
+                            start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'Khaki',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:2,y:10})
+                            // rect+=`<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:yellow;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
+                            rect_color= 'Khaki';  
                             }
-                            else if (rect_color=='orange'){
-                                start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'yellow',x:(Number(exon_stop[0])+1)*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_stop[i-1])+1)*100/exon_stop[exon_type.length-1],height:2,y:10})
-                                //rect +=`<rect x="${(Number(exon_intron_stop[0])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_stop[i-1])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:yellow;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
-                                
-                                
-                                rect_color = 'yellow'
-                            }
-                        }
-                        else if (i ==exon_type.length-2){
-                            if (rect_color == 'yellow'){
-                                start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'orange',x:(Number(exon_start[i]))*100/exon_stop[exon_type.length-1],width:(Number(exon_start[i+1])-Number(exon_start[i]))*100/exon_stop[exon_type.length-1],height:2,y:10})
-                                //rect += `<rect x="${(Number(exon_intron_start[i]))*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_start[i+1])-Number(exon_intron_start[i]))*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:orange;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron" />`;
-                                rect_color = 'orange'    
-                                
-                            }
-                            else if (rect_color=='orange'){
-                                start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'yellow',x:((Number(exon_start[i]))*100/exon_stop[exon_type.length-1]),width:(Number(exon_start[i+1])-Number(exon_start[i]))*100/exon_stop[exon_type.length-1],height:2,y:10})
-                                //rect +=`<rect x="${((Number(exon_intron_start[i]))*100/exon_intron_stop[exon_intron_type.length-1])}" y="10" width="${(Number(exon_intron_start[i+1])-Number(exon_intron_start[i]))*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:yellow;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
-                                rect_color = 'yellow'
-                            }
-                        }
-                        else if(i!=1 & i!=exon_type.length-2){
-                            if (rect_color == 'yellow'){
-                                start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'orange',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:2,y:10})
-                               // rect+=`<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:orange;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
-                                rect_color = 'orange';
-                            }else if (rect_color=='orange'){
-                                start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'yellow',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:2,y:10})
-                               // rect+=`<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:yellow;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
-                                rect_color= 'yellow';  
-                             }
-                        };
                     } 
                     else if (exon_type[i] == 'intron') {
-                        start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'black',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:0.5,y:10.75})
+                        start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'green',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:0.5,y:10.75})
                        // rect+=`<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:white;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
                      
                     }
                     else if (exon_type[i] == 'three_prime_UTR') {
-                        start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'gray',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:1,y:10.5})
+                        start_end_type_spliced_UTR.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'gray',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:1.25,y:10.35})
                         //rect += `<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:gray;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
                     }
                 };   
                 //$('#rect-unspliced').append(`<svg viewbox="0,9.5,110,3" preserveAspectRatio="xMinYMin meet"> ${rect}</svg>`) //the old way to append rect by loop
-
+                start_end_type_spliced =start_end_type_spliced.concat(start_end_type_spliced_UTR)
                 // by using d3 append rect and set hover by toolips
                 d3.select('#rect-spliced').style('position', 'relative')
                 rects = d3.select('#rect-spliced')
                 .append('svg')
                 .attr('viewBox',"0,9.5,110,3")
                 .attr('preserveAspectRation',"xMinYMin meet")
-                .selectAll('rect')
+                .selectAll('spliced')
                 .data(start_end_type_spliced)
                 .enter()
                 .append('rect')
@@ -374,7 +316,6 @@ $(document).ready(function(){
                 .attr('width', d => d.width)
                 .attr('y',d=>d.y)
                 .attr('fill', d => d.color)
-                .attr('start',d =>d.start)
                 .attr('height',d =>d.height)
                 .style('cursor', 'pointer')
                 .attr("id",'rects_spliced');
@@ -390,7 +331,7 @@ $(document).ready(function(){
                 .style("border-radius", "5px")
                 .style("padding", "5px")
                 .attr('id','tooltips2')
-            
+                
                 d3.selectAll('#rects_spliced').on('mouseover', function(){
                 tooltips2.style("opacity", 1) // 顯示tooltip
                 })
@@ -443,35 +384,6 @@ $(document).ready(function(){
         });
     });
 
-    //d3 test
-
-
-    /*
-    $('#rects').on('mouseover', function(){
-    tooltips.style("opacity", 1) // 顯示tooltip
-    })
-    .on('mousemove', function(d){
-    let pt = d3.pointer(event, this) // 抓圓點位置
-    $('#tooltips').style("opacity", 1)
-    .style('left', pt[0]+30+'px') // 設定tooltips位置
-    .style('top', pt[1]+'px')
-    .html(`start${d.target._data_.start}`) // 抓到綁定在DOM元素的資料
-    })   */   
-
-    
-    /*
-    //
-    const tooltip = d3.select(`#rect-unspliced`)
-    .append("div")
-    .style("position", "absolute")
-    .style("visibility", "visible") // 一開始tooltips是隱藏的
-    .style("background-color", "white")
-    .style("border", "solid")
-    .style("border-width", "1px")
-    .style("border-radius", "5px")
-    .style("padding", "10px")
-    .html(`<p>type:${exon_intron_type[i]}</p><p>start:${exon_intron_start[i]}</p>
-        <p>end:${exon_intron_stop[i]}</p><p>length:${Number(exon_intron_stop[i])-Number(exon_intron_start[i])}</p>`
-        ); */
+ 
 });
 
