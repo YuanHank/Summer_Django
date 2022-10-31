@@ -43,6 +43,9 @@ urlpatterns = [
     # browser
     path('browser/',views.browser),
     path('browser/browser_ajax/',views.browser_ajax),
+    # enrichment
+    path('enrichment/',views.enrichment),
+    path('enrichment/ajax/',views.enrichment_ajax),
     #dinamic
         #for any clicking link that will lead to web_data/output/transcriptname website
     re_path(r'web_data/output/(?P<pk>.+)',views.output),

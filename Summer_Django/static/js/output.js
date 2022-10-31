@@ -271,7 +271,7 @@ $(document).ready(function(){
                         };
                     }
                 };   
-                // set rect data dict/ where after '//' is the old way to set rect by for loop 
+                // set rect data dict/ where after '//' is the old way to set rect by for loop (spliced)
                 for (var i=0;i<exon_type.length;i++){
                     if (exon_type[i] == 'five_prime_UTR')
                     {

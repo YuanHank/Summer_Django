@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    
+
     $('#submit').click(function(){
         
         $.ajax({
@@ -29,10 +29,10 @@ $(document).ready(function(){
                             }
                             },
                         { data: 'transcript_type',title:'transcript type'},
-                        { data: 'transcript', "name": "transcript",title:'pirScan',
+                        { data: 'transcript', "name": "transcript",title:'site',
                         "render": function(data, type, row, meta){    
                             data = `<a href = 'http://127.0.0.1:8000/pirscan/${data}'>
-                            <button type="button">${data}</button> </a>`;
+                            <button type="button">site</button> </a>`;
                             return data;
                         }
                         },
@@ -101,4 +101,5 @@ $(document).ready(function(){
 
     });
 
+    
 });

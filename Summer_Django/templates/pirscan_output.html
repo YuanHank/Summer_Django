@@ -2,10 +2,14 @@
 {% load static %}
 {% block title %} Form Test {% endblock %}
 {% block content %}
+
 <div class="container">
 {% csrf_token %}
 <script>csrf_token= "{{ csrf_token }}"</script>
 <div class="card mt-3">
+
+
+
     <div class="card-header fs-5 fw-bold">
         pirscan {{id}}
     </div>
@@ -39,5 +43,8 @@
     </div>
 
 </div>
+
+
+
 <script src="{% static 'js/pirscan_auto.js' %}"></script> 
 {% endblock %}

@@ -1,5 +1,7 @@
 $(document).ready(function(){
         var url = document.URL
+        var start_end_type_spliced=[]
+        var start_end_type_spliced_UTR=[]
         url = url.replace('http://127.0.0.1:8000/pirscan/','')
         $.ajax({
             headers: { 'X-CSRFToken': csrf_token },
@@ -15,11 +17,82 @@ $(document).ready(function(){
                 d3_y = response.y
                 var g22 = response.g22
                 max_evenly_rc = response.max_evenly_rc
+                exon_start = response.exon_start;
+                exon_stop = response.exon_stop;
+                exon_type = response.exon_type;
                 if (data == 'none'){
                     //alert('not availiable CDS or wrong input')
                     $('#table').html("<span> not availiable CDS or wrong input </span>")
                 }
                 else{
+                    //d3 for spliced
+                    /*----------------------------------------------------------------------------- */
+                    exon_type = exon_type.replace('[','');
+                    exon_type = exon_type.replace(']','');
+                    exon_type = exon_type.replace(/"/g,'');
+                    exon_type = exon_type.split(',');
+                    /*----------------------------------------------------------------------------- */
+                    exon_start = exon_start.replace('[','');
+                    exon_start = exon_start.replace(']','');
+                    exon_start = exon_start.split(',');                
+                    /*----------------------------------------------------------------------------- */
+                    exon_stop = exon_stop.replace('[','');
+                    exon_stop = exon_stop.replace(']','');
+                    exon_stop = exon_stop.split(',');
+                    /*----------------------------------------------------------------------------- */
+                    var color = 'orange';
+                    var rect_color='orange';
+                    for (var i=0;i<exon_type.length;i++){
+                        if (exon_type[i] == 'five_prime_UTR')
+                        {
+                            start_end_type_spliced_UTR.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'gray',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:1.25,y:0.5})
+                            //rect =rect+ `<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:gray;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`;
+                            
+                        }
+                        else if (exon_type[i] == 'exon') {
+                            if (rect_color == 'Khaki'){
+                                start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'orange',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:2,y:0})
+                                // rect+=`<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:orange;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
+                                rect_color = 'orange';
+                            }else if (rect_color=='orange'){
+                                start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'Khaki',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:2,y:0})
+                                // rect+=`<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:yellow;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
+                                rect_color= 'Khaki';  
+                                }
+                        } 
+                        else if (exon_type[i] == 'intron') {
+                            start_end_type_spliced.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'green',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:0.5,y:0})
+                           // rect+=`<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:white;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
+                         
+                        }
+                        else if (exon_type[i] == 'three_prime_UTR') {
+                            start_end_type_spliced_UTR.push({start:Number(exon_start[i]),end:Number(exon_stop[i]),type:String(exon_type[i]),color:'gray',x:Number(exon_start[i])*100/exon_stop[exon_type.length-1],width:(Number(exon_stop[i])-Number(exon_start[i])+1)*100/exon_stop[exon_type.length-1],height:1.25,y:0.5})
+                            //rect += `<rect x="${Number(exon_intron_start[i])*100/exon_intron_stop[exon_intron_type.length-1]}" y="10" width="${(Number(exon_intron_stop[i])-Number(exon_intron_start[i])+1)*100/exon_intron_stop[exon_intron_type.length-1]}" height="2" style="fill:gray;cursor:pointer" id ="exon_intron_${i}" class="rect_exon_intron"/>`
+                        }
+                    };   
+                    //$('#rect-unspliced').append(`<svg viewbox="0,9.5,110,3" preserveAspectRatio="xMinYMin meet"> ${rect}</svg>`) //the old way to append rect by loop
+                    start_end_type_spliced =start_end_type_spliced.concat(start_end_type_spliced_UTR)
+                    // by using d3 append rect and set hover by toolips
+
+                    d3.select('#sequence').style('position', 'relative')
+                    rects = d3.select('#sequence')
+                    .append('svg')
+                    .attr("id","sequence_svg")
+                    .attr('viewBox',"0,0,100,2")
+                    .attr('preserveAspectRation',"xMinYMim slice")
+                    .selectAll('spliced')
+                    .data(start_end_type_spliced)
+                    .enter()
+                    .append('rect')
+                    .attr('x', d => d.x)
+                    .attr('width', d => d.width)
+                    .attr('y',d=>d.y)
+                    .attr('fill', d => d.color)
+                    .attr('height',d =>d.height)
+                    .style('cursor', 'pointer')
+                    .attr("id",'sequence_rect');
+
+
                 $('#sequence-table').DataTable({
                     "stateSave": true,
                     "data": data,
@@ -37,21 +110,6 @@ $(document).ready(function(){
                     ],
                     "bDestroy": true
                 })
-                //d3 for the sequence
-                d3.select('#sequence').style('position', 'relative')
-                rects = d3.select('#sequence')
-                .append('svg')
-                .attr("id","sequence_svg")
-                .attr('viewBox',"0,0,100,2")
-                .attr('preserveAspectRation',"xMinYMim slice")
-                .append('rect')
-                .attr('x',0)
-                .attr('width',100)
-                .attr('y',0)
-                .attr('fill', 'Brown')
-                .attr('height',2)
-                .style('cursor', 'pointer')
-                .attr("id",'sequence_rect');
                 // for ticker
                 d3.select('#ticker').style('position', 'relative')
                 ticker = d3.select('#sequence')
@@ -87,7 +145,7 @@ $(document).ready(function(){
                 d3.select('#G_22').style('position', 'relative')
                 rects = d3.select('#G_22')
                 .append('svg')
-                .attr('viewBox',`0,0,100,${max_evenly_rc+1}`)
+                .attr('viewBox',`0,0,100,${max_evenly_rc}`)
                 .attr('preserveAspectRation',"xMinYMin slice")
                 .selectAll('rect')
                 .data(g22)
@@ -165,5 +223,6 @@ $(document).ready(function(){
             },
         });
 
+        
     });
 

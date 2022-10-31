@@ -10,18 +10,19 @@ import json
 from .check_duplicate import check_duplicate
 import re
 from .wormbase import wormbase_crawler,wormbase_searching
+from .enrichment_website import enrichment_website
 from new_app import form
 from django.db import connection
 from django.http import JsonResponse
 import os 
 from operator import itemgetter
-
+import ast 
 # Create your views here.
 
 def hello_world(request):
     time = datetime.now()
     return render(request,'hello_world.html',locals())# used locals()包成區域變數 傳入dicts
-'=====================================output======================================================'
+'''=============================================output============================================================'''
 #用來爬wormbase的表格(output葉面上的ajax)
 def crawler(request):
     '''
@@ -158,8 +159,8 @@ def output(request,pk):
         return render(request,'output.html',locals())
     if protein == '(-)':
         return render(request,'output2.html',locals())
-    
-'=====================================transcript_geneid_genename======================================================'
+
+'''=====================================transcript_geneid_genename================================================'''
 def transcript_geneid_genename(request):
     return render(request,'transcriptgene.html',locals())
 
@@ -246,14 +247,14 @@ def transcript_geneid_genename_ajax(request):#從duplicate 改寫而來
 
     return JsonResponse(response)
 
-'''==========================================index/genelist=================================================='''
+'''==========================================index/genelist======================================================='''
 def index(request):
     genes = Hw1Improve.objects.all()
     return render(request, 'index.html', locals())
 def gene_list(request):
     genes = Hw1Improve.objects.all()
     return render(request, 'gene_list.html', locals())
-'''===================================searching==============================================================='''
+'''=======================================searching==============================================================='''
 def searching(request):
 
     return render(request,'searching.html',locals())
@@ -266,7 +267,7 @@ def searching_ajax(request):
         }
 
     return JsonResponse(response)
-'================================Check if multiple geneID====================================================='
+'''======================================Check if multiple geneID================================================='''
 def duplicate_check(request):
 
     return render(request,'duplicate.html',locals())
@@ -322,10 +323,15 @@ def duplicate_ajax(request):
         }
 
     return JsonResponse(response)
-'''===========================================pirscan======================================================='''
+'''============================================pirscan============================================================'''
 #this function is used for ouput the dataframe in pirscan_output.html(ajax)
 def pirscan_ajax(request):
     transcript = request.POST['gene_id']
+    spliced_fin,sequence_fin,exon_intron,exon,protein = wormbase_crawler(transcript= transcript)
+    exon = exon.sort_values(by='stop').reset_index(drop=True)
+    exon_type = exon['type'].to_json(orient='records')
+    exon_start = exon['start'].to_json(orient='records')
+    exon_stop = exon['stop'].to_json(orient='records')
     #with open ('sequence.fa','w') as f:
     #    f.write('>\n{}'.format(sequence))
     #os.system('python3 piTarPrediction.py sequence.fa ce whole [0,2,2,3,6]')
@@ -370,8 +376,7 @@ def pirscan_ajax(request):
         y = 0
         y_list = [0]
         first = 1
-        while cover != 0:
-            
+        while cover != 0:    
             cover = 0
             start = 0
             end = 0
@@ -411,8 +416,121 @@ def pirscan_ajax(request):
             回傳json檔案，單個元素裡面包含該22G的:開始點，結束點，權重，並將這份json檔案回傳，回傳後依造權重給予高度，開始結束點繪出結合位置，
             '''
             g22 = list(FinalResultWt1HrdeipWs285AllWithIdtype.objects.filter(ref_id=transcript).values())
-            g22 = sorted(g22, key=itemgetter('evenly_rc'),reverse=True)
-            max_evenly_rc = float(g22[0]['evenly_rc']) 
+            ls = sorted(g22, key=itemgetter('init_pos'),reverse=True)
+            cover =1
+            while cover !=0:
+                count +=1
+                start = 0
+                end = 0
+                first = 1
+                cover = 0
+                for i in range(0,len(ls)):
+                    if first == 1:
+                        start = ls[i]['init_pos']
+                        end = ls[i]['end_pos']
+                        height = ls[i]['evenly_rc']
+                        index = i
+                        first = 0
+                    elif first != 1 :
+                        if (ls[i]['init_pos'] > start) and (ls[i]['init_pos'] < end) and (ls[i]['end_pos']<end):
+                            init_1 = start
+                            end_1 = ls[i]['init_pos']-1
+                            height_1 = height
+                            init_2 = ls[i]['init_pos']
+                            end_2 = ls[i]['end_pos']
+                            height_2 = height+ls[i]['evenly_rc']
+                            init_3 = ls[i]['end_pos']+1
+                            end_3 = end
+                            height_3 = height
+                            remove_indices = [index,i]
+                            ls = [k for o, k in enumerate(ls) if o not in remove_indices]
+                            ls.append({'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':init_1,'end_pos':end_1,'read_count':0,'field_ofanswers':0,'evenly_rc':height_1})
+                            ls.append({'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':init_2,'end_pos':end_2,'read_count':0,'field_ofanswers':0,'evenly_rc':height_2})
+                            ls.append({'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':init_3,'end_pos':end_3,'read_count':0,'field_ofanswers':0,'evenly_rc':height_3})
+                            ls= sorted(ls, key=itemgetter('init_pos'),reverse=False)
+                            cover = 1
+                            break
+                        elif (ls[i]['init_pos'] > start) and (ls[i]['init_pos'] < end) and (ls[i]['end_pos']>end):
+                            init_1 = start
+                            end_1 = ls[i]['init_pos']-1
+                            height_1 = height
+                            init_2 = ls[i]['init_pos']
+                            end_2 = end
+                            height_2 = height+ls[i]['evenly_rc']
+                            init_3 = end+1
+                            end_3 = ls[i]['end_pos']
+                            height_3 = height
+                            remove_indices = [index,i]
+                            ls = [k for o, k in enumerate(ls) if o not in remove_indices]
+                            ls.append({'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':init_1,'end_pos':end_1,'read_count':0,'field_ofanswers':0,'evenly_rc':height_1})
+                            ls.append({'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':init_2,'end_pos':end_2,'read_count':0,'field_ofanswers':0,'evenly_rc':height_2})
+                            ls.append({'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':init_3,'end_pos':end_3,'read_count':0,'field_ofanswers':0,'evenly_rc':height_3})
+                            ls= sorted(ls, key=itemgetter('init_pos'),reverse=False)
+                            cover = 1
+                            break
+                        elif (ls[i]['init_pos'] == start) and (ls[i]['end_pos']<end) :
+                            init_1 = start
+                            end_1 = ls[i]['end_pos']
+                            height_1 = ls[i]['evenly_rc']+height
+                            init_2 = ls[i]['end_pos']+1
+                            end_2 = end
+                            height_2 = height
+                            remove_indices = [index,i]
+                            ls = [k for o, k in enumerate(ls) if o not in remove_indices]
+                            ls.append({'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':init_1,'end_pos':end_1,'read_count':0,'field_ofanswers':0,'evenly_rc':height_1})
+                            ls.append({'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':init_2,'end_pos':end_2,'read_count':0,'field_ofanswers':0,'evenly_rc':height_2})
+                            ls= sorted(ls, key=itemgetter('init_pos'),reverse=False)
+                            cover = 1
+                            break
+                        elif (ls[i]['init_pos'] > start) and (ls[i]['init_pos'] < end) and (ls[i]['end_pos'] == end):
+                            init_1 = start
+                            end_1 = ls[i]['init_pos'] -1 
+                            height_1 = height
+                            init_2 = ls[i]['init_pos']
+                            end_2 = end
+                            height_2 = height+ls[i]['evenly_rc']
+                            remove_indices = [index,i]
+                            ls = [k for o, k in enumerate(ls) if o not in remove_indices]
+                            ls.append({'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':init_1,'end_pos':end_1,'read_count':0,'field_ofanswers':0,'evenly_rc':height_1})
+                            ls.append({'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':init_2,'end_pos':end_2,'read_count':0,'field_ofanswers':0,'evenly_rc':height_2})
+                            ls= sorted(ls, key=itemgetter('init_pos'),reverse=False)
+                            cover = 1         
+                            break
+                        
+                        elif (ls[i]['init_pos'] == start)  and (ls[i]['end_pos'] == end):   
+                            init_1 = start
+                            end_1 = end
+                            height_1 = height +ls[i]['evenly_rc']
+                            remove_indices = [index,i]
+                            ls = [k for o, k in enumerate(ls) if o not in remove_indices]
+                            ls.append({'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':init_1,'end_pos':end_1,'read_count':0,'field_ofanswers':0,'evenly_rc':height_1})
+                            ls= sorted(ls, key=itemgetter('init_pos'),reverse=False)
+                            cover = 1          
+                            break
+                        
+                        elif (ls[i]['init_pos'] == end)  and (ls[i]['end_pos'] == end):   
+                            init_1 = start
+                            end_1 = end-1
+                            height_1 = height 
+                            init_2 = end 
+                            end_2 = end
+                            height_2 = height + ls[i]['evenly_rc']
+                            remove_indices = [index,i]
+                            ls = [k for o, k in enumerate(ls) if o not in remove_indices]
+                            ls.append({'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':init_1,'end_pos':end_1,'read_count':0,'field_ofanswers':0,'evenly_rc':height_1})
+                            ls.append({'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':init_2,'end_pos':end_2,'read_count':0,'field_ofanswers':0,'evenly_rc':height_2})
+                            ls= sorted(ls, key=itemgetter('init_pos'),reverse=False)
+                            cover = 1          
+                            break
+
+                        else: 
+                            start = ls[i]['init_pos']
+                            end = ls[i]['end_pos']   
+                            index = i
+                            pass
+            g22 = sorted(ls, key=itemgetter('evenly_rc'),reverse=True)
+            max_evenly_rc = float(g22[0]['evenly_rc'])  
+            
         except:
             g22 = [{'input_id':0,'ref_id':0,'wormbase_id':0,'type':0,'init_pos':0,'end_pos':0,'read_count':0,'field_ofanswers':0,'evenly_rc':0}]
             max_evenly_rc = 0
@@ -422,7 +540,10 @@ def pirscan_ajax(request):
             'length':len(length[1]),
             'y':y,
             'g22':g22,
-            'max_evenly_rc' : max_evenly_rc
+            'max_evenly_rc' : max_evenly_rc,
+            'exon_start':exon_start,
+            'exon_stop':exon_stop,
+            'exon_type':exon_type,
         }
     except Exception as e:
         print(e)
@@ -447,7 +568,7 @@ def pirscan_output(request,pk):
     except Exception as e:
         print(e)
     return render(request,'pirscan_output.html',locals())
-'''==============================================browser======================================================='''
+'''=================================================browser======================================================='''
 def browser(request):
     return render(request,'browser.html',locals())
 
@@ -461,7 +582,20 @@ def browser_ajax(request):
     data_out = data_out.to_json(orient = 'records')
     response = {'data_out':data_out}
     return JsonResponse(response)
-'''==============================================user(暑假的最初練習)======================================================='''
+'''========================================enrichment============================================================='''
+def enrichment(request):
+    return render(request,'enrichment.html',locals())
+def enrichment_ajax(request):
+
+    input_list = ast.literal_eval(request.POST['protein_list'])
+    ratio = float(request.POST['cutoff'])
+    adjustment = request.POST['p-value']
+    result = enrichment_website(input_list,adjustment,ratio)
+    new_result=result.to_json(orient="records")
+    new_result =list(json.loads(new_result)) #這邊轉換狠重要
+    response = {'result_table':new_result}
+    return JsonResponse(response)
+'''==========================================user(暑假的最初練習)=================================================='''
 # 將 SQL 指令回傳的 List 轉成 Dict
 def dictfetchall(cursor):
     columns = [col[0] for col in cursor.description]
