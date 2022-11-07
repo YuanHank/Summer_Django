@@ -1,0 +1,47 @@
+<!-- index.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} home {% endblock %}
+{% block content %}
+
+
+<div class="container">
+    {% csrf_token %}
+    <script>csrf_token= "{{ csrf_token }}"</script>
+    <div class='card-body'>
+        <form id="ajax_form">
+            <label for="protein_list" class="form-label">protein_list:</label>
+            <input type="text" class="form-control" name="protein_list" placeholder="eg. ['YLR449W','YML074C','YNL135C']">
+            <label for="cutoff" class="form-label">Cutoff P-value:</label>
+            <input type="text" class="form-control" name="cutoff" placeholder="eg. 0.01">
+            <select name="p-value">
+                <option value="">選擇p值調整方式</option>
+                <option value="No adjustment">No adjustment</option>
+                <option value="FDR" selected>FDR</option>
+                <option value="Bonferroni">Bonferroni</option>
+            </select>
+        </form>
+        <hr>
+        <button class="btn btn-outline-primary" id="submit">送出</button>
+    </div>
+    <div calss = 'table'>
+        <table class="table table-hover" id =enrichment_table style=" border-collapse: collapse;border: 1px solid;">
+            <thead style=" border-collapse: collapse;border: 1px solid;">
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script src ="{% static 'js/enrichment.js' %}"></script>
+{% endblock %}
